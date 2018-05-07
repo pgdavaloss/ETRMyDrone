@@ -7,6 +7,86 @@
     android:animateLayoutChanges="true"
     tools:context="etr.mydrone.com.djimobilecontrol.MainActivity">
 
+
+    <LinearLayout
+        android:id="@+id/flight_status_ll"
+        android:layout_width="155dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="60dp"
+        android:background="@drawable/background_round"
+        android:layout_marginTop="280dp"
+        android:elevation="1dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/orientation_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/orientation_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:text="Orientation:" />
+
+            <TextView
+                android:id="@+id/orientation_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/cord_bar_lat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lat_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:text="Latitude:" />
+
+            <TextView
+                android:id="@+id/lat_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/coord_bar_long"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/long_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:text="Longitude: " />
+
+            <TextView
+                android:id="@+id/long_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/status_bar_ll"
         android:layout_width="match_parent"
@@ -103,10 +183,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/status_bar_ll">
-
     </FrameLayout>
 
-    <LinearLayout
+    <!--LinearLayout
         android:id="@+id/ll_for_map"
         android:layout_width="170dp"
         android:layout_height="150dp"
@@ -115,40 +194,41 @@
         android:elevation="1dp"
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </LinearLayout-->
 
     <RelativeLayout
-        android:paddingStart="15dp"
-        android:background="@drawable/background_round"
-        android:gravity="center_vertical"
-        android:layout_alignParentBottom="true"
         android:id="@+id/status_ll_va"
-        android:layout_centerHorizontal="true"
         android:layout_width="280dp"
         android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/flight_status_ll"
         android:layout_marginBottom="18dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+
+        android:background="@drawable/background_round"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp">
 
         <TextView
             android:id="@+id/hs_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_toRightOf="@+id/d_title"
-            android:textSize="12sp"
-            android:text="H.S: "
             android:shadowColor="@color/black"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
+            android:text="H.S: "
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="12sp" />
 
         <TextView
-            android:layout_toRightOf="@id/hs_title"
             android:id="@+id/velocity_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/hs_title"
             android:shadowColor="@color/black"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -158,23 +238,24 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/vs_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_toRightOf="@+id/h_title"
-            android:id="@+id/vs_title"
-            android:textSize="12sp"
-            android:text="V.S: "
             android:shadowColor="@color/black"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
+            android:text="V.S: "
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="12sp" />
+
         <TextView
-            android:layout_toRightOf="@id/vs_title"
             android:id="@+id/vertical_velocity_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/vs_title"
             android:shadowColor="@color/black"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -185,23 +266,23 @@
 
         <TextView
             android:id="@+id/d_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_toRightOf="@+id/vs_title"
-            android:textSize="12sp"
-            android:text="D: "
             android:shadowColor="@color/black"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
+            android:text="D: "
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="12sp" />
 
         <TextView
-            android:layout_toRightOf="@id/d_title"
             android:id="@+id/horizontal_distance_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/d_title"
             android:shadowColor="@color/black"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -213,21 +294,21 @@
         <TextView
 
             android:id="@+id/h_title"
-            android:textSize="12sp"
-            android:text="H: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:shadowColor="@color/black"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
+            android:text="H: "
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="12sp" />
 
         <TextView
-            android:layout_toRightOf="@id/h_title"
             android:id="@+id/altitude_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/h_title"
             android:shadowColor="@color/black"
             android:shadowDx="0"
             android:shadowDy="0"

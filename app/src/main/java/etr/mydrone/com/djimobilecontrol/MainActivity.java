@@ -14,16 +14,16 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
+
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
+
 import android.widget.TextView;
 
 import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.BaiduMap;
+/*import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -32,7 +32,7 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.map.UiSettings;
-import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLng;*/
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -92,11 +92,10 @@ public class MainActivity extends Activity {
     private TextView statusHorizontalDistanceTextView;
     private TextView statusHorizontalVelocityTextView;
     private TextView statusVerticalVelocityTextView;
-    private Button mapPanelUndoButton;
-    private Button mapPanelStartMissionButton;
-    private Button mapPanelCancelMissionButton;
-    private Button mapPanelStopMissionButton;
-    private Switch[] developSwitchGroup;
+    private TextView statusLongitude;
+    private TextView statusLatitude;
+    private TextView statusOrientation;
+
 
     private SimpleProgressDialog startUpInfoDialog;
     private TextureView videoTextureView;
@@ -104,11 +103,12 @@ public class MainActivity extends Activity {
     private ScreenSizeConverter screenSizeConverter;
     /*
         baidu map
-     */
+
     private LinearLayout linearLayoutForMap;
     private MapView mapView;
     private RelativeLayout mapViewPanel;
     private BaiduMap baiduMap;
+    */
     /*
         data
      */
@@ -161,7 +161,7 @@ public class MainActivity extends Activity {
 
     private List<Waypoint> wayPointList = new ArrayList<>();
 
-    private BaiduMap.OnMapLongClickListener onMapLongClickListener
+   /* private BaiduMap.OnMapLongClickListener onMapLongClickListener
             = new BaiduMap.OnMapLongClickListener() {
         @Override
         public void onMapLongClick(LatLng latLng) {
@@ -198,7 +198,7 @@ public class MainActivity extends Activity {
                 );
             }
         }
-    };
+    };*/
 
 
     private View.OnTouchListener videoTextureViewFrameLayoutOnTouchListener
@@ -482,6 +482,9 @@ public class MainActivity extends Activity {
                         statusHorizontalDistanceTextView.setText("N/A");
                         statusVerticaLDistanceTextView.setText("N/A");
                         statusVerticalVelocityTextView.setText("N/A");
+                        statusLatitude.setText("N/A");
+                        statusLongitude.setText("N/A");
+                        statusOrientation.setText("N/A");
                         currentBatteryInPercent = -1;
                         curCameraMode = SettingsDefinitions.CameraMode.UNKNOWN;
                     }
@@ -494,7 +497,7 @@ public class MainActivity extends Activity {
         @Override
         public void onUpdate(@NonNull final FlightControllerState flightControllerState) {
             updateFlightParams(flightControllerState);
-            updateBaiduMapMyLocation(flightControllerState);
+            //updateBaiduMapMyLocation(flightControllerState);
             updateSatellitesCount(flightControllerState.getSatelliteCount());
         }
     };
@@ -518,8 +521,8 @@ public class MainActivity extends Activity {
                 SimpleAlertDialog.show(
                         MainActivity.this,
                         false,
-                        "verification failed",
-                        "Please check the network connection",
+                        "Verification failed",
+                        "Please check network connection",
                         new SimpleDialogButton("drop out", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface x, int y) {
@@ -592,7 +595,7 @@ public class MainActivity extends Activity {
 
         initPermissionRequest();
         initUI();
-        initBaiduMap();
+        //initBaiduMap();
         initVideoTextureView();
         initOnClickListener();
 
@@ -614,10 +617,10 @@ public class MainActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        mapView.onResume();
+        //mapView.onResume();
     }
 
-    private void initBaiduMap() {
+    /*private void initBaiduMap() {
         mapViewPanel = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.map_panel, null);
         linearLayoutForMap = (LinearLayout) findViewById(R.id.ll_for_map);
         mapView = (MapView) mapViewPanel.findViewById(R.id.mv_mapview);
@@ -626,7 +629,7 @@ public class MainActivity extends Activity {
 
         /*
             configure Baidu MapView
-         */
+
         baiduMap = mapView.getMap();
         baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         mapView.setClickable(true);
@@ -650,7 +653,7 @@ public class MainActivity extends Activity {
                 true,
                 null));
 
-    }
+    }*/
 
     private void initVideoTextureView() {
         videoTextureView = new TextureView(this);
@@ -679,6 +682,10 @@ public class MainActivity extends Activity {
         statusHorizontalDistanceTextView = (TextView) findViewById(R.id.horizontal_distance_txt);
         statusHorizontalVelocityTextView = (TextView) findViewById(R.id.velocity_txt);
         statusVerticalVelocityTextView = (TextView) findViewById(R.id.vertical_velocity_txt);
+        statusLatitude = (TextView)  findViewById(R.id.lat_txt);
+        statusLongitude = (TextView) findViewById(R.id.long_txt);
+        statusOrientation = (TextView) findViewById(R.id.orientation_txt);
+
 
 
         rectView = new RectView(MainActivity.this);
@@ -692,7 +699,7 @@ public class MainActivity extends Activity {
 
         videoTextureViewFrameLayout.addView(rectView);
 
-        developSwitchGroup = new Switch[7];
+
 
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(500, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -873,7 +880,7 @@ public class MainActivity extends Activity {
     }
 
     private void clearWaypoint() {
-        baiduMap.clear();
+        //baiduMap.clear();
         wayPointList.clear();
         System.gc();
     }
@@ -1004,11 +1011,19 @@ public class MainActivity extends Activity {
                 statusVerticalVelocityTextView.setText(String.format(Locale.CHINA, "%.1f", (int) (flightControllerState.getVelocityZ() * 10) == 0 ? 0.0000f : (-1.0) * flightControllerState.getVelocityZ()));
                 double distance = LLDistanceConverter.LL2Distance(flightControllerState.getHomeLocation().getLatitude(), flightControllerState.getHomeLocation().getLongitude(), flightControllerState.getAircraftLocation().getLatitude(), flightControllerState.getAircraftLocation().getLongitude());
                 statusHorizontalDistanceTextView.setText(String.format(Locale.CHINA, "%.1f", distance));
+
+                double longitude = flightControllerState.getAircraftLocation().getLongitude();
+                statusLongitude.setText(String.format(Locale.CHINA,"%.5f", longitude));
+                double latitude = flightControllerState.getAircraftLocation().getLatitude();
+                statusLatitude.setText(String.format(Locale.CHINA,"%.5f", latitude));
+
+                double orientation = flightControllerState.getAircraftHeadDirection();
+                statusOrientation.setText(String.format(Locale.CHINA,"%.1f", orientation));
             }
         });
     }
 
-    private void updateBaiduMapMyLocation(FlightControllerState flightControllerState) {
+    /*private void updateBaiduMapMyLocation(FlightControllerState flightControllerState) {
         LatLng cvLatLong = CoordinationConverter.GPS2BD09(
                 new LatLng(
                         flightControllerState.getAircraftLocation().getLatitude(),
@@ -1021,7 +1036,7 @@ public class MainActivity extends Activity {
                 .direction(flightControllerState.getAircraftHeadDirection())
                 .build();
         baiduMap.setMyLocationData(locationData);
-    }
+    }*/
 
     private void changeCameraState() {
         if (camera != null) {
