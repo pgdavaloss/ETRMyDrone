@@ -45,10 +45,6 @@
             android:value="f85450341eb5f7f397583935" />
         <!-- f85450341eb5f7f397583935 -->
 
-        <!--meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="pslIh5FoWscBQsxzjXGcYXXfgHqA1H9E" /-->
-        <!-- pslIh5FoWscBQsxzjXGcYXXfgHqA1H9E -->
 
         <service android:name="dji.sdk.sdkmanager.DJIGlobalService" />
 

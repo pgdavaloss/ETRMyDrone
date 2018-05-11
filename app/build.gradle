@@ -27,7 +27,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //noinspection GradleCompatible
-    compile files('libs/BaiduLBS_Android.jar')
+
     compile project(':dJISDKLIB')
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.android.support:multidex:1.0.1'

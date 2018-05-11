@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
@@ -17,22 +16,13 @@ import android.view.WindowManager;
 
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+
 import android.widget.RelativeLayout;
 
 import android.widget.TextView;
 
-import com.baidu.mapapi.SDKInitializer;
-/*import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.PolylineOptions;
-import com.baidu.mapapi.map.UiSettings;
-import com.baidu.mapapi.model.LatLng;*/
+
+
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -46,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import etr.mydrone.com.djimobilecontrol.ConverterUtil.CoordinationConverter;
+
 import etr.mydrone.com.djimobilecontrol.ConverterUtil.LLDistanceConverter;
 import etr.mydrone.com.djimobilecontrol.ConverterUtil.ScreenSizeConverter;
 import etr.mydrone.com.djimobilecontrol.DataUtil.OnboardDataEncoder;
@@ -62,7 +52,6 @@ import dji.common.camera.SettingsDefinitions;
 import dji.common.error.DJIError;
 import dji.common.error.DJISDKError;
 import dji.common.flightcontroller.FlightControllerState;
-import dji.common.mission.waypoint.Waypoint;
 import dji.common.util.CommonCallbacks;
 import dji.sdk.base.BaseComponent;
 import dji.sdk.base.BaseProduct;
@@ -72,6 +61,7 @@ import dji.sdk.camera.VideoFeeder;
 import dji.sdk.codec.DJICodecManager;
 import dji.sdk.flightcontroller.FlightController;
 import dji.sdk.sdkmanager.DJISDKManager;
+
 
 
 public class MainActivity extends Activity {
@@ -101,18 +91,11 @@ public class MainActivity extends Activity {
     private TextureView videoTextureView;
     private RectView rectView;
     private ScreenSizeConverter screenSizeConverter;
-    /*
-        baidu map
 
-    private LinearLayout linearLayoutForMap;
-    private MapView mapView;
-    private RelativeLayout mapViewPanel;
-    private BaiduMap baiduMap;
-    */
     /*
         data
      */
-    private float waypointMissionFlightHeight = 30.0f;
+
     private byte[] coordinators = new byte[4];
     private AtomicBoolean isUsingObjectFollow = new AtomicBoolean(false);
     private Socket socket;
@@ -159,46 +142,7 @@ public class MainActivity extends Activity {
     private Battery battery;
     private FlightController flightController;
 
-    private List<Waypoint> wayPointList = new ArrayList<>();
 
-   /* private BaiduMap.OnMapLongClickListener onMapLongClickListener
-            = new BaiduMap.OnMapLongClickListener() {
-        @Override
-        public void onMapLongClick(LatLng latLng) {
-            LatLng latLngGPS84 = CoordinationConverter.BD092GPS84(latLng);
-            wayPointList.add(new Waypoint(
-                    latLngGPS84.latitude,
-                    latLngGPS84.longitude,
-                    waypointMissionFlightHeight)
-            );
-            baiduMap.addOverlay(new MarkerOptions()
-                    .position(latLng)
-                    .animateType(MarkerOptions.MarkerAnimateType.grow)
-                    .flat(true)
-                    .anchor(0.5F, 0.5F)
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker))
-                    .draggable(false));
-            final int pointListSize = wayPointList.size();
-            if (pointListSize > 1) {
-                baiduMap.addOverlay(new PolylineOptions()
-                        .points(new ArrayList<LatLng>() {
-                            {
-                                add(CoordinationConverter.GPS2BD09(new LatLng(
-                                        wayPointList.get(pointListSize - 1).coordinate.getLatitude(),
-                                        wayPointList.get(pointListSize - 1).coordinate.getLongitude()
-                                )));
-                                add(CoordinationConverter.GPS2BD09(new LatLng(
-                                        wayPointList.get(pointListSize - 2).coordinate.getLatitude(),
-                                        wayPointList.get(pointListSize - 2).coordinate.getLongitude()
-                                )));
-                            }
-                        })
-                        .color(R.color.purple)
-                        .dottedLine(true)
-                );
-            }
-        }
-    };*/
 
 
     private View.OnTouchListener videoTextureViewFrameLayoutOnTouchListener
@@ -221,7 +165,7 @@ public class MainActivity extends Activity {
                 case MotionEvent.ACTION_UP:
                     videoTextureViewFrameLayout.setOnTouchListener(null);
                     rectView.setVisibility(View.GONE);
-                    //followLinearLayout.setVisibility(View.VISIBLE);
+
 
                     coordinators[0] = screenSizeConverter.convertX2XPercent(rectView.getX1());
                     coordinators[1] = screenSizeConverter.convertY2YPercent(rectView.getY1());
@@ -497,7 +441,7 @@ public class MainActivity extends Activity {
         @Override
         public void onUpdate(@NonNull final FlightControllerState flightControllerState) {
             updateFlightParams(flightControllerState);
-            //updateBaiduMapMyLocation(flightControllerState);
+
             updateSatellitesCount(flightControllerState.getSatelliteCount());
         }
     };
@@ -590,12 +534,12 @@ public class MainActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE);
         getWindow().getAttributes().systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE;
 
-        SDKInitializer.initialize(getApplicationContext());
+
         setContentView(R.layout.activity_main);
 
         initPermissionRequest();
         initUI();
-        //initBaiduMap();
+
         initVideoTextureView();
         initOnClickListener();
 
@@ -617,43 +561,9 @@ public class MainActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        //mapView.onResume();
+
     }
 
-    /*private void initBaiduMap() {
-        mapViewPanel = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.map_panel, null);
-        linearLayoutForMap = (LinearLayout) findViewById(R.id.ll_for_map);
-        mapView = (MapView) mapViewPanel.findViewById(R.id.mv_mapview);
-
-        linearLayoutForMap.addView(mapViewPanel);
-
-        /*
-            configure Baidu MapView
-
-        baiduMap = mapView.getMap();
-        baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-        mapView.setClickable(true);
-        mapView.showZoomControls(false);
-        mapView.showScaleControl(false);
-        baiduMap.setMyLocationEnabled(true);
-
-        UiSettings uiSettings = baiduMap.getUiSettings();
-        uiSettings.setCompassEnabled(false);
-        uiSettings.setAllGesturesEnabled(false);
-        uiSettings.setScrollGesturesEnabled(true);
-        uiSettings.setZoomGesturesEnabled(true);
-
-
-        // zoom the map 6 times to ensure it is large enough :)
-        for (int i = 0; i < 6; i++)
-            baiduMap.setMapStatus(MapStatusUpdateFactory.zoomIn());
-
-        baiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
-                MyLocationConfiguration.LocationMode.FOLLOWING,
-                true,
-                null));
-
-    }*/
 
     private void initVideoTextureView() {
         videoTextureView = new TextureView(this);
@@ -879,11 +789,7 @@ public class MainActivity extends Activity {
 
     }
 
-    private void clearWaypoint() {
-        //baiduMap.clear();
-        wayPointList.clear();
-        System.gc();
-    }
+
 
     private void checkSocketConnection() {
         new Thread() {
@@ -1023,20 +929,6 @@ public class MainActivity extends Activity {
         });
     }
 
-    /*private void updateBaiduMapMyLocation(FlightControllerState flightControllerState) {
-        LatLng cvLatLong = CoordinationConverter.GPS2BD09(
-                new LatLng(
-                        flightControllerState.getAircraftLocation().getLatitude(),
-                        flightControllerState.getAircraftLocation().getLongitude()
-                )
-        );
-        MyLocationData locationData = new MyLocationData.Builder()
-                .latitude(cvLatLong.latitude)
-                .longitude(cvLatLong.longitude)
-                .direction(flightControllerState.getAircraftHeadDirection())
-                .build();
-        baiduMap.setMyLocationData(locationData);
-    }*/
 
     private void changeCameraState() {
         if (camera != null) {
